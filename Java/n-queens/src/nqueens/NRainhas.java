@@ -2,18 +2,20 @@ package nqueens;
 
 public class NRainhas {
     
-    private static final int N = 8;
-    
     /*
     *   A posição i do vetor indica a coluna da rainha e o valor na posição i
     *   inidica a linha
     */
     private int[] tabuleiro;
+    private int N = 8;
     private int num_solucoes;
+    private boolean hab_print;
     
-    public NRainhas(){
+    public NRainhas(int n){
+        this.N = n;
         tabuleiro = new int[N];
         num_solucoes = 0;
+        hab_print = false;
     }
     
     public void executar(){
@@ -27,7 +29,9 @@ public class NRainhas {
                 tabuleiro[col] = i;
                 if (col == N-1){
                     num_solucoes++;
-                    //printSolucao();
+                    if (hab_print){
+                        printSolucao();
+                    }
                 }
                 else {
                     executar(col+1);
@@ -53,10 +57,13 @@ public class NRainhas {
         return true;
     }
     
-    public void printSolucao(){
+    public void habilitarPrint(boolean print){
+        hab_print = print;
+    }
+    
+    private void printSolucao(){
         System.out.println("\nSOLUÇÃO: ");
         for (int i = 0; i < N; i++) {
-            //System.out.print(tabuleiro[i]+" ");
             System.out.print("|");
             for (int j = 0; j < N; j++) {
                 if (i == tabuleiro[j]){
