@@ -16,7 +16,7 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;; FUNÇÃO SEGURO?
 ;;;;;;;;;;;;;;;;;;;;
-; Lista Número Número -> Boolean
+; Lista Natural Natural -> Boolean
 ; Verifica se é seguro colocar uma nova rainha
 ; na posição linha, coluna do tabuleiro.
 
@@ -54,10 +54,8 @@
 ;; FUNÇÃO
 (define (seguro? tabuleiro linha coluna)
   (define (iter tabuleiro linha coluna acc)
-    ;(define primeiro (first tabuleiro))
     (cond
-      ;[(empty? tabuleiro) true]        ; Iterou por toda a lista
-      [(= acc coluna) true]        ; Iterou por toda a lista
+      [(empty? tabuleiro) true]          ; Iterou por toda a lista
       [(or (= (first tabuleiro) linha)      ; Colisão na linha
            (= (abs (- (first tabuleiro) linha)) (abs (- acc coluna)))  ; Colisão nas diagonais
            ) false]
@@ -71,7 +69,7 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;; FUNÇÃO NQUEENS
 ;;;;;;;;;;;;;;;;;;;;
-; Número -> Número
+; Natural -> Natural
 ; Calcula o número total de soluções do problema das
 ; N-Rainhas para uma entrada N.
 
@@ -80,6 +78,7 @@
 (define nrainhas-tests
   (test-suite
    "n-rainhas tests"
+   (check-exn exn:fail? (thunk (nrainhas -1)))
    (check-equal? (nrainhas 1) 1)
    (check-equal? (nrainhas 2) 0)
    (check-equal? (nrainhas 3) 0)
@@ -94,6 +93,7 @@
 ;; FUNÇÃO
 (define (nrainhas n)
   (define num-solucoes 0)
+  (define solucoes empty)
   (define (iter col tabuleiro)
     (for ([i n]
           #:when (seguro? tabuleiro i col))
@@ -120,3 +120,6 @@
 (executa-testes seguro?-tests
                 nrainhas-tests)
 
+
+(display "\nINSTRUÇÕES:\nPara executar o programa, basta utilizar a função (nrainhas N)
+onde N é o tamanho do tabuleiro. A saída será o número de soluções.")
